@@ -41,6 +41,11 @@ public class BasePage {
         findElement(locator).click();
     }
 
+    /***
+     * Custom method to enter text into textbox
+     * @param text
+     * @param locator
+     */
     protected void enterText(String text, By locator) {
         waitForElementToDisplay(locator);
         findElement(locator).clear();

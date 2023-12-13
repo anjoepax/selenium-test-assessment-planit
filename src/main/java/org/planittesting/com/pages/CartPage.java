@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class CartPage extends BasePage {
@@ -18,7 +19,7 @@ public class CartPage extends BasePage {
     }
 
     public List<String> getTableValue(String columnName) {
-        HashMap<String, By> byTargetLocator = new HashMap<>();
+        Map<String, By> byTargetLocator = new HashMap<>();
         byTargetLocator.put("PRICES", By.xpath("//tr[@ng-repeat='item in cart.items()']/td[2]"));
         byTargetLocator.put("SUBTOTAL", By.xpath("//tr[@ng-repeat='item in cart.items()']/td[4]"));
         return findElements(byTargetLocator.get(columnName.toUpperCase()))

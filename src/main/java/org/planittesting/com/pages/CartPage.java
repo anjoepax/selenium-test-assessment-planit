@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 import java.time.Duration;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,23 +18,12 @@ public class CartPage extends BasePage {
     }
 
     public List<String> getTableValue(String columnName) {
-        List<String> values;
-        switch (columnName.toUpperCase()) {
-            case "PRICES" -> {
-                By itemPrices = By.xpath("//tr[@ng-repeat='item in cart.items()']/td[2]");
-                values = findElements(itemPrices).stream()
-                        .map(WebElement::getText)
-                        .collect(Collectors.toList());
-            }
-            case "SUBTOTAL" -> {
-                By itemSubtotal = By.xpath("//tr[@ng-repeat='item in cart.items()']/td[4]");
-                values = findElements(itemSubtotal).stream()
-                        .map(WebElement::getText)
-                        .collect(Collectors.toList());
-            }
-            default -> throw new RuntimeException("Unknown column name in the Cart page table...");
-        }
-        return values;
+        HashMap<String, By> byTargetLocator = new HashMap<>();
+        byTargetLocator.put("PRICES", By.xpath("//tr[@ng-repeat='item in cart.items()']/td[2]"));
+        byTargetLocator.put("SUBTOTAL", By.xpath("//tr[@ng-repeat='item in cart.items()']/td[4]"));
+        return findElements(byTargetLocator.get(columnName.toUpperCase()))
+                .stream().map(WebElement::getText)
+                .collect(Collectors.toList());
     }
 
     public String getTotalValue() {
